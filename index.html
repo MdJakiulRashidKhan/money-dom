@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/money.png" type="image/x-icon">
+    <title>Money-Master</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <header>
+        <h1 class="text-center text-6xl my-4">Money Master</h1>
+    </header>
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row">
+          <img src="/images/money.png" class="max-w-lg rounded-lg shadow-2xl" />
+          <div>
+            <h4 class="text-xl font-bold text-center mb-3">Income</h4>
+            <div class="flex gap-4 content-center justify-center">
+                <p class="text-bold mt-1">Income :</p>
+                <input id="incomeInput" class="p-1" type="number" placeholder="Income">
+            </div>
+            <h4 class="text-xl font-bold text-center my-3">Expense</h4>
+            <div class="flex gap-4 content-center               justify-center mb-2">
+                <p class="text-bold mt-1">Food :</p>
+                <input id="foodInput" class="p-1" type="number" placeholder="Food">
+            </div>
+            <div class="flex gap-4 content-center               justify-center mb-2">
+                <p class="text-bold mt-1">Cloth :</p>
+                <input id="clothInput" class="p-1" type="number" placeholder="Cloth">
+            </div>
+            <div class="flex gap-4 content-center               justify-center mb-2">
+                <p class="text-bold mt-1">Rent :</p>
+                <input id="rentInput" class="p-1" type="number" placeholder="Rent">
+            </div>
+            <button id="calculationButton" class="px-8 py-2 my-3 mx-auto block bg-[#59A5FF] ">Calculate</button>
+            <h2   class="text-xl font-bold text-center mb-3">Total Expenses:<span id="totalExpense"></span> </h2>
+            <h2  class="text-xl font-bold text-center mb-3">Balance:<span id="balance"></span> </h2>
+
+            <div class="flex justify-center content-center  gap-2">
+                <p class="font-bold pt-1">Save:</p>
+                <input id="saveInput" class="w-3/12" type="number">
+                <p class="pt-1">%</p>
+                <button id="saveButton" class="px-8 py-2 bg-[#59A5FF]">Save</button>
+            </div>
+            <h2  class="text-xl font-bold text-center my-3">Saving Amount:<span id="savingAmount"></span> </h2>
+            <h2 class="text-xl font-bold text-center mb-3">Remaining Balance:<span id="remainingBalance"></span> </h2>
+          </div>
+        </div>
+      </div>
+
+    <script>
+
+        function inputFieldById(input){
+          const inputField= document.getElementById(input);
+          const inputFieldString = inputField.value;
+          const inputValue = parseFloat(inputFieldString);
+          inputField.value='';
+          return inputValue;
+        }
+
+        document.getElementById('calculationButton').addEventListener('click', function(){
+        const income = inputFieldById('incomeInput');
+        const food = inputFieldById('foodInput');
+        const cloth = inputFieldById('clothInput');
+        const rent = inputFieldById('rentInput');
+
+        const totalExpenses = food + cloth + rent;
+        console.log(totalExpenses);
+
+        const expenseSpan = document.getElementById("totalExpense"); 
+        const balanceSpan = document.getElementById("balance");
+
+        expenseSpan.innerText = totalExpenses; 
+
+        const balance = income - totalExpenses;
+        balanceSpan.innerText = balance;
+    });
+
+    document.getElementById('saveButton').addEventListener('click', function() {
+    const savingPercentage = inputFieldById('saveInput');
+
+    const balanceSpan = document.getElementById('balance');
+    const balanceSpanString = balanceSpan.innerText;
+    const balance = parseFloat(balanceSpanString);
+
+    const savingAmount = (savingPercentage * balance) / 100;
+    const remainingBalance = balance - savingAmount;
+
+    const savingAmountSpan = document.getElementById('savingAmount');
+    savingAmountSpan.innerText = savingAmount.toFixed(2);
+
+    const remainingBalanceSpan = document.getElementById('remainingBalance');
+    remainingBalanceSpan.innerText = remainingBalance.toFixed(2);
+});
+
+
+    </script> 
+</body>
+</html>
